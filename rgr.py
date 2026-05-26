@@ -15,18 +15,19 @@ y = df['bomb_planted']
 
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42, stratify=y)
 
-print("гиперпараметры для логистической регрессии")
+print("\nГиперпараметры для логистической регрессии\n")
 param_grid_lr = {
     'C': [0.1, 1, 10], 
     'penalty': ['l2'], 
     'solver': ['lbfgs', 'saga'], 
     'max_iter': [2000]
 }
+
 grid_search_lr = GridSearchCV(LogisticRegression(random_state=42), param_grid_lr, cv=5, scoring='f1_weighted', n_jobs=-1)
 grid_search_lr.fit(X_train, y_train)
 best_lr = grid_search_lr.best_estimator_
 
-print("GradientBoosting через Optuna")
+print("\nGradientBoosting через Optuna\n")
 def objective_gb_clf(trial):
     params = {
         'n_estimators': trial.suggest_int('n_estimators', 50, 500),
@@ -42,7 +43,7 @@ study_gb_clf = optuna.create_study(direction='maximize')
 study_gb_clf.optimize(objective_gb_clf, n_trials=15)
 best_gb = GradientBoostingClassifier(**study_gb_clf.best_params, random_state=42)
 
-print("CatBoostClassifier через Optuna")
+print("\nCatBoostClassifier через Optuna\n")
 def objective_cb_clf(trial):
     params = {
         'iterations': trial.suggest_int('iterations', 200, 1000),
@@ -68,7 +69,7 @@ best_cb_params = {
 }
 best_cb = CatBoostClassifier(**best_cb_params)
 
-print("BaggingClassifier через Optuna")
+print("\nBaggingClassifier через Optuna\n")
 def objective_bagging_clf(trial):
     param = {
         'n_estimators': trial.suggest_int('n_estimators', 20, 500),
@@ -89,7 +90,7 @@ study_bag_clf.optimize(objective_bagging_clf, n_trials=30)
 best_bag_clf = BaggingClassifier(estimator=DecisionTreeClassifier(random_state=42), random_state=42)
 best_bag_clf.set_params(**study_bag_clf.best_params)
 
-print("StackingClassifier через Optuna")
+print("\nStackingClassifier через Optuna\n")
 def objective_stacking_clf(trial):
     gb_params = {
         'n_estimators': trial.suggest_int('gbr__n_estimators', 50, 300),
@@ -129,7 +130,7 @@ best_stack = StackingClassifier(
     final_estimator=LogisticRegression(C=bp['meta_C'])
 )
 
-print("обучение всех ансамблей и нейросети")
+print("\nОбучение всех ансамблей и нейросети:\n")
 
 models = {
     "ML1_LogisticRegression": best_lr,
@@ -140,7 +141,7 @@ models = {
     "ML6_NeuralNetwork": MLPClassifier(hidden_layer_sizes=(64, 32), max_iter=500, random_state=42)
 }
 
-print("\nметрики качества f1")
+print("\nМетрики качества F1")
 for name, model in models.items():
     if name != "ML1_LogisticRegression":
         model.fit(X_train, y_train)
