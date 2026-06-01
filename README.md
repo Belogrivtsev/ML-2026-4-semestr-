@@ -52,4 +52,4 @@
 ## Ссылки
 
 - **GitHub-репозиторий (исходный код):** [https://github.com/Belogrivtsev/ML-2026-4-semestr-/tree/master]
-- **Веб-дашборд (Streamlit Cloud):** [...] (на данный момент проблемы с подключением)
+- **Веб-дашборд (Hugging Face):** [https://huggingface.co/spaces/AndrewBelogrivtsev/RGR_ML_2026/tree/main] (на данный момент проблемы с доступом к Streamlit Cloud)
