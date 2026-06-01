@@ -51,5 +51,5 @@
 
 ## Ссылки
 
-- **GitHub-репозиторий (исходный код):** [...]
-- **Веб-дашборд (Streamlit Cloud):** [...]
+- **GitHub-репозиторий (исходный код):** [https://github.com/Belogrivtsev/ML-2026-4-semestr-/tree/master]
+- **Веб-дашборд (Streamlit Cloud):** [...] (на данный момент проблемы с подключением)
